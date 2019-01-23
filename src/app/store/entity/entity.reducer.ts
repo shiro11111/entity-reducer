@@ -1,4 +1,5 @@
 import {PayloadAction} from '../models/payload-action.model';
+import {dog} from './schemas';
 
 export interface EntityState {
   entities: { [key: string]: any };
@@ -23,7 +24,7 @@ export function entityReducer(state = initialState, action: PayloadAction) {
       entity[dog] = {...entity[dog]};
     });
 
-    entity =
+    entity = {...entity[item], ...entity[dog]};
   }
   return state;
 }
