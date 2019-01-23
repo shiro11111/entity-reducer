@@ -1,0 +1,16 @@
+<div>
+  <h3>list state: </h3>
+  <div *ngFor="let item of (dogIds$ | async)">{{ item }}</div>
+</div>
+
+
+<button (click)="onLoadDogDetails()">Click to load details(observe the entities state!)</button>
+<div>
+  <h3>entities state: </h3>
+  <pre>{{entities$ | async | json}}</pre>
+</div>
+
+<div>
+  <h3>data: </h3>
+  <div *ngFor="let dog of (dogList$ | async)">{{ dog?.breed }} {{ dog?.name }}</div>
+</div>
