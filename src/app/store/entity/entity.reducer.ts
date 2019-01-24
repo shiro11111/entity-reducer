@@ -1,5 +1,4 @@
-import {PayloadAction} from '../models/payload-action.model';
-import {dog} from './schemas';
+import { PayloadAction } from '../models/payload-action.model';
 
 export interface EntityState {
   entities: { [key: string]: any };
@@ -13,18 +12,28 @@ const initialState: EntityState = {
 
 export function entityReducer(state = initialState, action: PayloadAction) {
   if (action && action.payload && action.payload.entities) {
+
     let entity = {};
 
     const keys = Object.keys(initialState.entities); //['dog']
+
     keys.forEach((item: string) => {
-      entity[item] = {...entity[item]};
-    });
-    const dogKeys = Object.keys(initialState.entities.dog);
-    dogKeys.forEach((dog: string) => {
-      entity[dog] = {...entity[dog]};
+      const actionEntity = action.payload.entities[item] || {};
+      const stateEntity = state.entities[item] || {};
+      const newEntitites = {};
+      const ids = Object.keys(actionEntity);
+
+      ids.forEach((id: string) => {
+        newEntitites[id] = { ...(stateEntity[id] || {}), ...(actionEntity[id] || {}) };
+      });
+
+      entity[item] = { ...actionEntity, ...stateEntity, ...newEntitites };
     });
 
-    entity = {...entity[item], ...entity[dog]};
+    return {
+      ...state,
+      entities: entity
+    };
   }
   return state;
 }

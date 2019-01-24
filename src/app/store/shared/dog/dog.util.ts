@@ -40,6 +40,6 @@ export class DogUtil {
       id: 1,
       owner: 'Siuzi',
       name: 'Siuzi Tsi'
-    }
+    };
   }
 }
